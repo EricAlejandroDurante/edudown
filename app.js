@@ -1,5 +1,7 @@
 //framework de node para crear url's en node
-const express = require('express')
+const express = require('express');
+const bodyparser = require('body-parser');
+require('dotenv').config()
 
 /*
 Apollo herramienta para crear API de graphql
@@ -13,9 +15,18 @@ const {typeDefs} = require('./typeDefs')
 //Para hacer las consultas basado en lo definido en typeDefs
 const {resolvers} = require('./resolvers')
 
+//Coneccion base de datos
+const {connectDB} = require('./db');
 const app = express()
+connectDB()
 
-app.get('/', (req,res) => 
+//Importar rutas
+const authRoutes = require('./routes/auth')
+const validatetoken = require("./routes/middleware");
+
+
+app.use('/api/user', authRoutes);
+app.get('/',validatetoken, (req,res) => 
     res.send('Welcome to my api')
 );
 
