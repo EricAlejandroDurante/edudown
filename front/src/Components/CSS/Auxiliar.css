@@ -1,0 +1,10 @@
+.Fondo {
+    padding-top: 5%;
+    background-image: 
+    url(
+  "https://img.freepik.com/foto-gratis/hermoso-arbol-medio-campo-cubierto-hierba-linea-arboles-fondo_181624-29267.jpg?w=1380&t=st=1654750435~exp=1654751035~hmac=c33e06024393bcc4b3b203f08f0e64b76bb59c3b4bfbde3e292c8dc7612e1ace");
+    background-size: "cover";
+    height: 100vh;
+    font-size:50px;
+    background-repeat:no-repeat; 
+  }
