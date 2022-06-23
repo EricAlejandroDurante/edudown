@@ -10,13 +10,28 @@ const typeDefs = gql`
         #Que datos retornar cuando se consultan
     }
 
+    type Box{
+        id: ID
+        tipo_box: String
+        tamano_box: String
+        estado_actual: String
+    }
+
+    type Insumo{
+        id: ID
+        insumo: String
+        tipo_insumo: String
+        cantidad: Int
+    }
+
     type User{
         RUT: String
         name: String
         email: String
         password: String
         especialidad: String
-        date: String
+        Date: String
+        edad: Int
         #Que datos retornar cuando se consultan
     }
 
@@ -30,7 +45,9 @@ const typeDefs = gql`
     type Mutation{
         #Se creara la taera y devolvera la que se creo en la base de datos
         createTask(title: String, description: String): Task #tittle: String, description: String
-        createUser(RUT: String, name: String, email: String, password: String, especialidad: String, date: String): User
+        createUser(RUT: String, name: String, email: String, password: String, especialidad: String, date: String, edad:Int): User
+        createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
+        createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
     }
 `
 module.exports = {typeDefs}

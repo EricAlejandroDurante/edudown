@@ -34,6 +34,10 @@ const userSchema = Schema({
     date:{
         type: Date,
         default: Date.now
+    },
+    edad:{
+        type: Number,
+        required: true
     }
 });
 

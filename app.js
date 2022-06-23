@@ -26,6 +26,7 @@ const validatetoken = require("./routes/middleware");
 
 
 app.use('/api/user', authRoutes);
+
 app.get('/',validatetoken, (req,res) => 
     res.send('Welcome to my api')
 );
@@ -34,7 +35,6 @@ module.exports = app
 
 //Iniciar el servidor
 async function start (){
-
     const apolloServer = new ApolloServer({
         typeDefs,
         resolvers
