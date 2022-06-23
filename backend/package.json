@@ -1,0 +1,36 @@
+{
+  "name": "edudown",
+  "version": "1.0.0",
+  "description": "npm init -y\r npm i express apollo-server-express dotenv graphql mongoose\r npm i nodemon",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricAlejandroDurante/edudown.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EricAlejandroDurante/edudown/issues"
+  },
+  "homepage": "https://github.com/EricAlejandroDurante/edudown#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "apollo-server-express": "^3.9.0",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "graphql": "^16.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.3.3"
+  }
+}
