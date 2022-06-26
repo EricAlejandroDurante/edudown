@@ -2,6 +2,7 @@ const Task = require('./models/Task');
 const User = require('./models/User');
 const Box = require('./models/Box');
 const Insumo = require('./models/Insumo');
+const Paciente = require('./models/Paciente');
 
 const resolvers = {
     Query:{
@@ -14,6 +15,16 @@ const resolvers = {
         getAllUsers: async () => {
             const users = await User.find()
             return users
+        },
+
+        getInsumosPorEspecialidad: async (_, args) => {
+            const users = await Insumo.find({tipo_insumo: args.tipo_insumo})
+            return users
+        },
+        getBox: async(_, args) => {
+            console.log(args.tipo_box)
+            const box = await Box.findOne({tipo_box : args.tipo_box})
+            return box
         }
     },
     //guardando en base de datos
@@ -39,6 +50,12 @@ const resolvers = {
         async createInsumo(_,args){
             const {id, insumo, tipo_insumo, cantidad} = args
             const newuser = new Insumo({id, insumo, tipo_insumo, cantidad})
+            await newuser.save()
+            return newuser
+        },
+        async createPaciente(_,args){
+            const {id, sesion, etapa} = args
+            const newuser = new Paciente({id, sesion, etapa})
             await newuser.save()
             return newuser
         }
