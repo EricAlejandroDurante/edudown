@@ -58,6 +58,12 @@ const resolvers = {
             const newuser = new Paciente({id, sesion, etapa})
             await newuser.save()
             return newuser
+        },
+        async UpdateBox(_,args){
+            const boxUpdate = await Box.updateOne({id: args.id},{
+                $set: args
+            })
+            return boxUpdate
         }
     }
 };

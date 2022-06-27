@@ -24,7 +24,6 @@ connectDB()
 const authRoutes = require('./routes/auth')
 const validatetoken = require("./routes/middleware");
 
-
 app.use('/api/user', authRoutes);
 
 app.get('/',validatetoken, (req,res) => 

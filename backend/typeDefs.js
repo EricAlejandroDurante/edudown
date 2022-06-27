@@ -65,6 +65,8 @@ const typeDefs = gql`
         createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
         createPaciente(id: String, sesion: Int, etapa: Int): Paciente
         createAppointment(id:ID, especialistaID:ID, pacienteID: ID, horaInicio: String): Appointment
+        UpdateBox(id:Int, estado_actual: String): Box
     }
 `
+
 module.exports = {typeDefs}
