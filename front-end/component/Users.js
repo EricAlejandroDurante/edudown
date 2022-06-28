@@ -9,7 +9,6 @@ query Users{
       email
       password
       especialidad
-      Date
       edad
     }
   }

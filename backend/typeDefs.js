@@ -60,7 +60,7 @@ const typeDefs = gql`
     type Mutation{
         #Se creara la taera y devolvera la que se creo en la base de datos
         createTask(title: String, description: String): Task #tittle: String, description: String
-        createUser(id:ID,RUT: String, name: String, email: String, password: String, especialidad: String, date: String, edad:Int): User
+        createUser(RUT: String, name: String, email: String, password: String, especialidad: String, edad:Int): User
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
         createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
         createPaciente(id: String, sesion: Int, etapa: Int): Paciente

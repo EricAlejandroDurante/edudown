@@ -3,6 +3,7 @@ const User = require('./models/User');
 const Box = require('./models/Box');
 const Insumo = require('./models/Insumo');
 const Paciente = require('./models/Paciente');
+//const Appointment = require('./models/Appointment');
 
 const resolvers = {
     Query:{
@@ -25,7 +26,11 @@ const resolvers = {
             console.log(args.tipo_box)
             const box = await Box.findOne({tipo_box : args.tipo_box})
             return box
-        }
+        }, 
+        /*getAppointment: async(_,args) => {
+            const appointment = await Appointment.find({especialistaID: args.especialistaID, pacienteID: args.pacienteID, horaInicio:args.horaInicio})
+            return appointment
+        },*/
     },
     //guardando en base de datos
     Mutation:{
@@ -59,12 +64,18 @@ const resolvers = {
             await newuser.save()
             return newuser
         },
+        /*async createAppointment(_, args){
+            const {id, especialistaID, pacienteID, horaInicio}= args
+            const newAppointment = new Appointment({id, especialistaID, pacienteID, horaInicio})
+            await newAppointment.save()
+            return newAppointment
+        },*/
         async UpdateBox(_,args){
             const boxUpdate = await Box.updateOne({id: args.id},{
                 $set: args
             })
             return boxUpdate
-        }
+        },
     }
 };
 
