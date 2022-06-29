@@ -11,6 +11,7 @@ const typeDefs = gql`
 
     type Paciente{
         id: ID
+        name: String
         sesion: Int
         etapa: Int
     }
@@ -43,8 +44,8 @@ const typeDefs = gql`
 
     type Appointment{
         id: Int
-        especialistaID: ID
-        pacienteID: ID
+        especialistaID: String
+        pacienteID: String
         horaInicio: String
     }
 
@@ -52,8 +53,11 @@ const typeDefs = gql`
         hello:String
         getAllTasks: [Task]
         getAllUsers: [User]
+        getAllPacientes: [Paciente]
+        getPaciente(id:ID): Paciente
         getInsumosPorEspecialidad(tipo_insumo: String): [Insumo]
         getBox(tipo_box: String):[Box]
+        getAppointment: [Appointment]
     }
 
     #crear eliminar o modificar usuario, mutation
@@ -63,8 +67,8 @@ const typeDefs = gql`
         createUser(RUT: String, name: String, email: String, password: String, especialidad: String, edad:Int): User
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
         createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
-        createPaciente(id: String, sesion: Int, etapa: Int): Paciente
-        createAppointment(id:ID, especialistaID:ID, pacienteID: ID, horaInicio: String): Appointment
+        createPaciente(name: String ,sesion: Int, etapa: Int): Paciente
+        createAppointment(id:ID, especialistaID:String, pacienteID: String, horaInicio: String): Appointment
         UpdateBox(id:Int, estado_actual: String): Box
     }
 `

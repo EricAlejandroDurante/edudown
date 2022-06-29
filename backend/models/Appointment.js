@@ -2,18 +2,18 @@ const { Schema, model } = require("mongoose");
 
 const AppointmentSchema = new Schema({
     id: {
-        type: Number
+        type: String
     },
     especialistaID: {
-        type: ID,
+        type: String,
         required: true
     },
     pacienteID: {
-        type: ID,
+        type: String,
         require: true
     },
     horaInicio: {
-        type: date-time,
+        type: String,
         required: true
     }
 });

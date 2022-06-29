@@ -1,8 +1,10 @@
+const { required } = require("@hapi/joi/lib/base");
 const { Schema, model } = require("mongoose");
 
 const PacienteSchema = new Schema({
-    id: {
-        type: String
+    name: {
+        type: String,
+        required: true
     },
     sesion: {
         type: Number,

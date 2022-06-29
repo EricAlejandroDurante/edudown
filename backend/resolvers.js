@@ -3,7 +3,7 @@ const User = require('./models/User');
 const Box = require('./models/Box');
 const Insumo = require('./models/Insumo');
 const Paciente = require('./models/Paciente');
-//const Appointment = require('./models/Appointment');
+const Appointment = require('./models/Appointment');
 
 const resolvers = {
     Query:{
@@ -17,6 +17,19 @@ const resolvers = {
             const users = await User.find()
             return users
         },
+        
+        getPaciente: async(_, args) => {
+            const paciente = await Paciente.findById(args.id)
+            return paciente
+        } ,
+        getAllPacientes: async () => {
+            const pacientes = await Paciente.find()
+            return pacientes
+        },
+        getAppointment: async() => {
+            const appointment = await Appointment.find()
+            return appointment
+        },
 
         getInsumosPorEspecialidad: async (_, args) => {
             const users = await Insumo.find({tipo_insumo: args.tipo_insumo})
@@ -26,11 +39,7 @@ const resolvers = {
             console.log(args.tipo_box)
             const box = await Box.findOne({tipo_box : args.tipo_box})
             return box
-        }, 
-        /*getAppointment: async(_,args) => {
-            const appointment = await Appointment.find({especialistaID: args.especialistaID, pacienteID: args.pacienteID, horaInicio:args.horaInicio})
-            return appointment
-        },*/
+        },
     },
     //guardando en base de datos
     Mutation:{
@@ -46,6 +55,13 @@ const resolvers = {
             await newuser.save()
             return newuser
         },
+        async createPaciente(_,args){
+            const {name, sesion, etapa} = args
+            const newPaciente = new Paciente({name, sesion, etapa})
+            await newPaciente.save()
+            return newPaciente
+        }
+        ,
         async createBox(_,args){
             const {id, tipo_box, tamano_box, estado_actual} = args
             const newuser = new Box({id, tipo_box, tamano_box, estado_actual})
@@ -58,18 +74,12 @@ const resolvers = {
             await newuser.save()
             return newuser
         },
-        async createPaciente(_,args){
-            const {id, sesion, etapa} = args
-            const newuser = new Paciente({id, sesion, etapa})
-            await newuser.save()
-            return newuser
-        },
-        /*async createAppointment(_, args){
+        async createAppointment(_, args){
             const {id, especialistaID, pacienteID, horaInicio}= args
             const newAppointment = new Appointment({id, especialistaID, pacienteID, horaInicio})
             await newAppointment.save()
             return newAppointment
-        },*/
+        },
         async UpdateBox(_,args){
             const boxUpdate = await Box.updateOne({id: args.id},{
                 $set: args
