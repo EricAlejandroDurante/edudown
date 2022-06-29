@@ -12,6 +12,7 @@ const typeDefs = gql`
     type Paciente{
         id: ID
         name: String
+        lastName: String
         sesion: Int
         etapa: Int
     }
@@ -27,6 +28,7 @@ const typeDefs = gql`
         id:ID
         RUT: String
         name: String
+        lastName: String
         email: String
         password: String
         especialidad: String
@@ -59,15 +61,25 @@ const typeDefs = gql`
         getBox(tipo_box: String):[Box]
         getAppointment: [Appointment]
     }
-
+    input userInput{
+        RUT: String
+        name: String
+        lastName: String
+        email: String
+        password: String
+        especialidad: String
+        edad:Int
+    }
     #crear eliminar o modificar usuario, mutation
     type Mutation{
         #Se creara la taera y devolvera la que se creo en la base de datos
         createTask(title: String, description: String): Task #tittle: String, description: String
-        createUser(RUT: String, name: String, email: String, password: String, especialidad: String, edad:Int): User
+        createUser(RUT: String, name: String, lastName: String, email: String, password: String, especialidad: String, edad:Int): User
+        deleteUser(id: ID!): String
+        updateUser(id:ID , user: userInput): User!
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
         createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
-        createPaciente(name: String ,sesion: Int, etapa: Int): Paciente
+        createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
         createAppointment(id:ID, especialistaID:String, pacienteID: String, horaInicio: String): Appointment
         UpdateBox(id:Int, estado_actual: String): Box
     }

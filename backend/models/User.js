@@ -13,6 +13,12 @@ const userSchema = Schema({
         min: 8,
         max: 40,
     },
+    lastName:{
+        type: String,
+        required:true,
+        min:2,
+        max:40,
+    },
     email:{
         type: String,
         required: true,

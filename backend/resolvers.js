@@ -13,19 +13,22 @@ const resolvers = {
             const tasks = await Task.find()
             return tasks
         },
+        //obtenemos a todos los usuarios
         getAllUsers: async () => {
             const users = await User.find()
             return users
         },
-        
+        //buscamos un paciente por su id
         getPaciente: async(_, args) => {
             const paciente = await Paciente.findById(args.id)
             return paciente
         } ,
+        //obtenemos a todos los pacientes
         getAllPacientes: async () => {
             const pacientes = await Paciente.find()
             return pacientes
         },
+        //creamos un agendamiento, el nombre no representa a lo que hace realmente
         getAppointment: async() => {
             const appointment = await Appointment.find()
             return appointment
@@ -43,43 +46,59 @@ const resolvers = {
     },
     //guardando en base de datos
     Mutation:{
+        //es solo de ejemplo
         async createTask(_,args){
             const {title, description} = args
             const newTask = new Task({title, description})
             await newTask.save()
             return newTask
         },
-        async createUser(_,args){
-            const {RUT, name, email, password, especialidad,edad} = args
-            const newuser = new User({RUT, name, email, password, especialidad,edad})
+        //Mutaciones de usuario
+        async createUser(_,args){//creamos a un usuario
+            const {RUT, name, lastName, email, password, especialidad,edad} = args
+            const newuser = new User({RUT, name, lastName, email, password, especialidad,edad})
             await newuser.save()
             return newuser
         },
+        async deleteUser(_, {id}){//eliminamos al usuario
+            await User.findByIdAndDelete(id);
+            return 'User delete'
+        },
+        async updateUser(_, {user, id}){//Actualizamos datos de los usuarios
+            const userUpdate = await User.findByIdAndUpdate(id, {
+                $set: user
+            }, {new: true})
+            return userUpdate
+        },
+        //creamos un paciente
         async createPaciente(_,args){
-            const {name, sesion, etapa} = args
-            const newPaciente = new Paciente({name, sesion, etapa})
+            const {name, lastName, sesion, etapa} = args
+            const newPaciente = new Paciente({name, lastName, sesion, etapa})
             await newPaciente.save()
             return newPaciente
-        }
-        ,
+        },
+        //se crea un box
         async createBox(_,args){
             const {id, tipo_box, tamano_box, estado_actual} = args
             const newuser = new Box({id, tipo_box, tamano_box, estado_actual})
             await newuser.save()
             return newuser
         },
+        //Se crea un insumo
         async createInsumo(_,args){
             const {id, insumo, tipo_insumo, cantidad} = args
             const newuser = new Insumo({id, insumo, tipo_insumo, cantidad})
             await newuser.save()
             return newuser
         },
+        //se crea un agendamiento a un box
         async createAppointment(_, args){
             const {id, especialistaID, pacienteID, horaInicio}= args
             const newAppointment = new Appointment({id, especialistaID, pacienteID, horaInicio})
             await newAppointment.save()
             return newAppointment
         },
+        //Se actualiza el estado del box
         async UpdateBox(_,args){
             const boxUpdate = await Box.updateOne({id: args.id},{
                 $set: args

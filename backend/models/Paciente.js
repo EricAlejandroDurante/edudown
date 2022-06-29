@@ -6,6 +6,10 @@ const PacienteSchema = new Schema({
         type: String,
         required: true
     },
+    lastName:{
+        type: String,
+        required: true
+    },
     sesion: {
         type: Number,
         required: true
