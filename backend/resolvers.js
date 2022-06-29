@@ -91,12 +91,16 @@ const resolvers = {
             await newuser.save()
             return newuser
         },
-        //se crea un agendamiento a un box
+        //se crea un agendamiento a un box, esto debe tener las tres mutaciones.
         async createAppointment(_, args){
-            const {id, especialistaID, pacienteID, horaInicio}= args
-            const newAppointment = new Appointment({id, especialistaID, pacienteID, horaInicio})
+            const {id, especialistaID, pacienteID, box_selectedID, horaInicio, selectedDate}= args
+            const newAppointment = new Appointment({id, especialistaID, pacienteID, box_selectedID, horaInicio, selectedDate})
             await newAppointment.save()
             return newAppointment
+        },
+        async deleteAppointment(_, {id}){
+            await Appointment.findByIdAndDelete(id)
+            return 'Appointment deleted'
         },
         //Se actualiza el estado del box
         async UpdateBox(_,args){

@@ -43,12 +43,14 @@ const typeDefs = gql`
         tamano_box: String
         estado_actual: String
     }
-
+    # según las especificaciones, se debe tener especialista relacionado- se debe agregar fecha seleccionada a la consulta.
     type Appointment{
         id: Int
         especialistaID: String
         pacienteID: String
+        box_selectedID:String
         horaInicio: String
+        selectedDate: String
     }
 
     type Query{
@@ -78,10 +80,11 @@ const typeDefs = gql`
         deleteUser(id: ID!): String
         updateUser(id:ID , user: userInput): User!
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
+        UpdateBox(id:Int, estado_actual: String): Box
         createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
         createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
-        createAppointment(id:ID, especialistaID:String, pacienteID: String, horaInicio: String): Appointment
-        UpdateBox(id:Int, estado_actual: String): Box
+        createAppointment(id:ID, especialistaID:String, pacienteID: String, box_selectedID: String, horaInicio: String, selectedDate: String): Appointment
+        deleteAppointment(id: ID!): String #Retornamos un mensaje
     }
 `
 
