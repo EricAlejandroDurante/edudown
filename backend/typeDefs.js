@@ -52,6 +52,16 @@ const typeDefs = gql`
         horaInicio: String
         selectedDate: String
     }
+    
+    #Funcionalidad 9, Notificaciones
+    type NotifyContingencies {
+        id:ID
+        boxNotify:String #La idea, es que se entregue el id del box que tiene el problema
+        dateNotify: String
+        timeNotification: String
+        userNotification: String# id del usuario que notifica
+        notification: String
+    }
 
     type Query{
         hello:String
@@ -62,7 +72,9 @@ const typeDefs = gql`
         getInsumosPorEspecialidad(tipo_insumo: String): [Insumo]
         getBox(tipo_box: String):[Box]
         getAppointment: [Appointment]
+        getAllNotifyContingencies: [NotifyContingencies]
     }
+
     input userInput{
         RUT: String
         name: String
@@ -85,6 +97,7 @@ const typeDefs = gql`
         createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
         createAppointment(id:ID, especialistaID:String, pacienteID: String, box_selectedID: String, horaInicio: String, selectedDate: String): Appointment
         deleteAppointment(id: ID!): String #Retornamos un mensaje
+        createNotifyContingencies(boxNotify: String, dateNotify: String, timeNotification: String, userNotification: String, notification: String): NotifyContingencies
     }
 `
 

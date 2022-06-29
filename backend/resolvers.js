@@ -4,6 +4,7 @@ const Box = require('./models/Box');
 const Insumo = require('./models/Insumo');
 const Paciente = require('./models/Paciente');
 const Appointment = require('./models/Appointment');
+const NotifyContingencies = require('./models/NotifyContingencies');
 
 const resolvers = {
     Query:{
@@ -33,7 +34,11 @@ const resolvers = {
             const appointment = await Appointment.find()
             return appointment
         },
-
+        //obtenemos todas las notificaciones
+        getAllNotifyContingencies: async() => {
+            const allNotifyContingencies = await NotifyContingencies.find()
+            return allNotifyContingencies
+        },
         getInsumosPorEspecialidad: async (_, args) => {
             const users = await Insumo.find({tipo_insumo: args.tipo_insumo})
             return users
@@ -69,6 +74,14 @@ const resolvers = {
                 $set: user
             }, {new: true})
             return userUpdate
+        },
+        
+        //mutacion de creación de notificación
+        async createNotifyContingencies(_, args){
+            const { boxNotify, dateNotify, timeNotification, userNotification, notification}= args
+            const newNotification = new NotifyContingencies({ boxNotify, dateNotify, timeNotification, userNotification, notification})
+            await newNotification.save()
+            return newNotification
         },
         //creamos un paciente
         async createPaciente(_,args){
