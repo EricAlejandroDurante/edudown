@@ -98,6 +98,7 @@ const typeDefs = gql`
         createAppointment(id:ID, especialistaID:String, pacienteID: String, box_selectedID: String, horaInicio: String, selectedDate: String): Appointment
         deleteAppointment(id: ID!): String #Retornamos un mensaje
         createNotifyContingencies(boxNotify: String, dateNotify: String, timeNotification: String, userNotification: String, notification: String): NotifyContingencies
+        deleteNotifyContingencies(id: ID!): String
     }
 `
 

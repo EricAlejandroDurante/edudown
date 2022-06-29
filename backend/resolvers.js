@@ -83,6 +83,10 @@ const resolvers = {
             await newNotification.save()
             return newNotification
         },
+        async deleteNotifyContingencies(_, {id}){
+            await NotifyContingencies.findByIdAndDelete(id)
+            return 'Notification deleted'
+        },
         //creamos un paciente
         async createPaciente(_,args){
             const {name, lastName, sesion, etapa} = args
