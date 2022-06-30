@@ -23,12 +23,11 @@ export default function AllNotification(){
         return JSON.stringify(error)
     }
     const getAllNotifyContingencies = data.getAllNotifyContingencies
+    console.log(getAllNotifyContingencies)
     return(
         <div>
             {!getAllNotifyContingencies && (<div><NotificationProblem/></div>)}
-            {getAllNotifyContingencies && (<div>
-                {getAllNotifyContingencies.notification}
-            </div>)}
+            {getAllNotifyContingencies && (<div>{getAllNotifyContingencies.id}</div>)}
         </div>
     )
 }
