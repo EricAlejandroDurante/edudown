@@ -2,6 +2,7 @@ import { gql, useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Form,Button } from "react-bootstrap"
+import styles from "../styles/Home.module.css"
 
 
 const FormSchema = Yup.object().shape({
@@ -55,12 +56,13 @@ export default function Create() {
     //return JSON.stringify(error)
   }
   return (
-    <div className='p-3 mb-2 bg-primary text-white'>
-      <h1>Hola</h1>
+    <div className= {styles.Contenedor}>
+ 
       <form onSubmit={formik.handleSubmit}>
+        
 
-        <div>
-        <Form>
+        <div className={styles.Form}>
+        <Form >
           <Form.Group className="mb-3" controlId="formBasicRUT" >
             <Form.Control name='rut' type="text" placeholder="RUT" onChange={formik.handleChange} value={formik.values.rut} required/>
           </Form.Group>
@@ -92,18 +94,18 @@ export default function Create() {
           <Form.Group className="mb-3" controlId="formBasicAge">
             <Form.Control name='edad' type="number" placeholder="Edad" onChange={formik.handleChange} value={formik.values.edad} required/>
           </Form.Group>
+          <Button variant='dark'>dark</Button>
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          
         </Form>
+        
 
 
         </div>
         
 
 
-       
+      
       </form>
     </div>
   )

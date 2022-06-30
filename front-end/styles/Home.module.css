@@ -1,5 +1,6 @@
 .container {
   padding: 0 2rem;
+  background-color: #CBE8F2;
 }
 
 .main {
@@ -41,6 +42,7 @@
 
 .title {
   margin: 0;
+  padding:3%;
   line-height: 1.15;
   font-size: 4rem;
 }
@@ -115,3 +117,21 @@
     flex-direction: column;
   }
 }
+
+.Form{
+
+  background-color:#D9F1CA ;
+  text-align: center;
+
+  padding: 5%;
+  border-radius: .75em;
+}
+
+.Contenedor{
+  background-color: #256980;
+  width: 30vw;
+  padding: 5%;
+  border-radius: .75em;
+  
+}
+
