@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import styles from "../styles/Home.module.css";
-import Notification from "../component/Notification";
+import Notification from "../component/Notification/NotificationProblem";
+import NotificationList from "../component/Notification/Notifications"
 
 export default function NotificationSide(){
     return (
@@ -9,8 +10,7 @@ export default function NotificationSide(){
                 <title>Edudown</title>
             </Head>
             <main className={styles.main}>
-                <h1>Notifique su problema</h1>
-                <Notification/>
+                <NotificationList/>
             </main>
         </div>
     )

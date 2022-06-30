@@ -40,13 +40,13 @@ export default function Home({ users }) {
 
       <main className={styles.main}>
       <div className={styles.grid}>
-  <h1>MARCIANEKE
+  <h1>Edudown
   </h1>
-</div><div><h2>Que PAZA!</h2></div>
+</div>
       </main>
 
       <footer className={styles.footer}>
-        Que saben de corte, si nosotros somoh el corte ahja!
+        Los pepinos - derechos reservados 
       </footer>
     </div>
   )

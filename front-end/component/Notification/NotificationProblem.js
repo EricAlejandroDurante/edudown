@@ -37,6 +37,7 @@ export default function CreateNotificationProblem(){
         onSubmit: async( values ) => {
             console.log(values)
             await notificationCreate({ variables: values})
+            alert("Se agrego satisfactoriamente")
         }
     })
     if (loading) {
