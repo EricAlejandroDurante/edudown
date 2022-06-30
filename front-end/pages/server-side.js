@@ -40,15 +40,14 @@ export default function Home({ users }) {
       <main className={styles.main}>
       <div className={styles.grid}>
   {users.map((user) => (
-    <div key={users.rut} className={styles.card}>
+    <div key={users.id} className={styles.card}>
       <h3>{user.name} {user.especialidad}</h3>
       <h3>{user.email}</h3>
     </div>
   ))}
 </div>
       </main>
-
-      <footer className={styles.footer}>
+  <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"

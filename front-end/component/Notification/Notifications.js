@@ -1,10 +1,9 @@
 import { useQuery, gql } from "@apollo/client";
 import NotificationProblem from "./NotificationProblem";
 
-const QUERY = gql`
+const Notify = gql`
     query GetAllNotifyContingencies {
      getAllNotifyContingencies {
-        id
         boxNotify
         dateNotify
         userNotification
@@ -14,20 +13,21 @@ const QUERY = gql`
 }
 `;
 export default function AllNotification(){
-    const {data , loading, error } = useQuery(QUERY)
+    const {data , loading, error } = useQuery(Notify)
+    console.log(data)
     
     if(loading){
-        return 'Cargando'
+        return 'Cargando...'
     }
     if(error) {
         return JSON.stringify(error)
     }
     const getAllNotifyContingencies = data.getAllNotifyContingencies
-    console.log(getAllNotifyContingencies)
+
     return(
         <div>
             {!getAllNotifyContingencies && (<div><NotificationProblem/></div>)}
-            {getAllNotifyContingencies && (<div>{getAllNotifyContingencies.id}</div>)}
+            {getAllNotifyContingencies && (<div>{getAllNotifyContingencies.dateNotify}</div>)}
         </div>
     )
 }
