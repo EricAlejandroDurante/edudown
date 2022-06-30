@@ -110,10 +110,47 @@ const resolvers = {
         },
         //se crea un agendamiento a un box, esto debe tener las tres mutaciones.
         async createAppointment(_, args){
-            const {id, especialistaID, pacienteID, box_selectedID, horaInicio, selectedDate}= args
-            const newAppointment = new Appointment({id, especialistaID, pacienteID, box_selectedID, horaInicio, selectedDate})
+            const {_id, especialistaID, pacienteID, box_selectedID, horaInicio, selectedDate, especialidadSesion, situacion}= args
+            const newAppointment = new Appointment({_id, especialistaID, pacienteID, box_selectedID, horaInicio, selectedDate, especialidadSesion, situacion})
             await newAppointment.save()
             return newAppointment
+        },
+
+
+        //FUNCIONALIDAD 5
+        async updateAppointment(_, args){
+            const apupdate = await Appointment.findByIdAndUpdate(args._id, {
+                $set: {situacion: args.situacion}
+            }, {new: true})
+            return apupdate
+        },
+
+        //FUNCIONALIDAD 11
+        async boxPorDia(_, args){
+            //La fecha es, por ejemplo: selectedDate: 30-06-22
+            const box_per_day = await Appointment.find({selectedDate: args.selectedDate})
+            return box_per_day
+        },
+
+
+        //FUNCIONALIDAD 13
+        async caracteristicasAppointment(_, args){
+            const caracupdate = await Appointment.find({especialidadSesion: args.especialidadSesion})
+            const caracupdateterminada = await Appointment.find({especialidadSesion: args.especialidadSesion})
+            let sesiones_terminadas = caracupdate.filter(caracupdate => caracupdate.situacion === "Terminada");
+            let sesiones_suspendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Suspendida");
+            let sesiones_extendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Extendida");
+            let sesiones_disponibles = caracupdate.filter(caracupdate => caracupdate.situacion === "Disponible");
+            let total = caracupdateterminada.length - sesiones_disponibles.length
+
+            //Porcentaje de sesiones terminadas
+            let porc_terminada = sesiones_terminadas.length/total * 100
+            //Porcentaje de sesiones suspendidas
+            let porc_suspendida = sesiones_suspendidas.length/total *100
+            //Porcentaje de sesiones extendidas
+            let porc_extendida = sesiones_extendidas.length/total *100
+            
+            return caracupdate
         },
         async deleteAppointment(_, {id}){
             await Appointment.findByIdAndDelete(id)

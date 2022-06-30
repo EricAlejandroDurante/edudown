@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 //En agendamiento podriamos agregar el box que corresponde a cada agendamiento
 const AppointmentSchema = new Schema({
-    id: {
-        type: String
+    _id: {
+        type: Number
     },
     especialistaID: {
         type: String,
@@ -13,7 +13,7 @@ const AppointmentSchema = new Schema({
         require: true
     },
     box_selectedID: {
-        type: String,
+        type: Number,
         require: true
     },
     horaInicio: {
@@ -23,6 +23,14 @@ const AppointmentSchema = new Schema({
     selectedDate: {
         type: String,
         required: true
-    }
+    },
+    especialidadSesion: {
+        type: String,
+        required: true
+    },
+    situacion: {
+        type: String,
+        required: true
+    },
 });
 module.exports = model("Appointment", AppointmentSchema);

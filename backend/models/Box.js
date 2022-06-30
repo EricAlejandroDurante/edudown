@@ -16,6 +16,5 @@ const BoxSchema = new Schema({
         type: String,
         required: true
     }
-    //creo que se debe agregar a la enfermera de box
 });
 module.exports = model("Box", BoxSchema);

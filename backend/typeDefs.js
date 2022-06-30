@@ -45,12 +45,14 @@ const typeDefs = gql`
     }
     # según las especificaciones, se debe tener especialista relacionado- se debe agregar fecha seleccionada a la consulta.
     type Appointment{
-        id: Int
+        _id: Int
         especialistaID: String
         pacienteID: String
         box_selectedID:String
         horaInicio: String
         selectedDate: String
+        especialidadSesion: String
+        situacion: String
     }
     
     #Funcionalidad 9, Notificaciones
@@ -88,15 +90,24 @@ const typeDefs = gql`
     type Mutation{
         #Se creara la taera y devolvera la que se creo en la base de datos
         createTask(title: String, description: String): Task #tittle: String, description: String
+
         createUser(RUT: String, name: String, lastName: String, email: String, password: String, especialidad: String, edad:Int): User
         deleteUser(id: ID!): String
         updateUser(id:ID , user: userInput): User!
+        createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
+
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
         UpdateBox(id:Int, estado_actual: String): Box
+
         createInsumo(id: Int,insumo: String, tipo_insumo: String, cantidad: Int): Insumo
-        createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
-        createAppointment(id:ID, especialistaID:String, pacienteID: String, box_selectedID: String, horaInicio: String, selectedDate: String): Appointment
+        
+        createAppointment(_id: Int, especialistaID:String, pacienteID: String, box_selectedID: Int, horaInicio: String, selectedDate: String, especialidadSesion: String, situacion: String): Appointment
+        boxPorDia(especialidadSesion: String): [Appointment]
+        caracteristicasAppointment(especialidadSesion: String): [Appointment]
+        updateAppointment(_id: Int, situacion: String): Appointment
         deleteAppointment(id: ID!): String #Retornamos un mensaje
+
+
         createNotifyContingencies(boxNotify: String, dateNotify: String, timeNotification: String, userNotification: String, notification: String): NotifyContingencies
         deleteNotifyContingencies(id: ID!): String
     }
