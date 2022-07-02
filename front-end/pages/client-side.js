@@ -1,8 +1,8 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import ClientOnly from "../component/ClientOnly";
-import UsersCreate from "../component/UserCreate";
-import Users from "../component/Users";
+import UsersCreate from "../components/UserCreate";
+import Users from "../components/Users";
 
 export default function ClientSide() {
     return (

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from "../styles/Home.module.css"
-import NewUser from "../component/UserCreate"
+import NewUser from "../components/UserCreate"
 
 export default function NewUserSide(){
     return(
@@ -8,9 +8,14 @@ export default function NewUserSide(){
             <Head>
                 <title>Edudown</title>
             </Head>
-            <main className={styles.main}>
+            <main>
+                <div className='flex flex-col justify-center items-center'>
+                    
                 <h1>Crear usuario</h1>
                 <NewUser/>
+
+                </div>
+
             </main>
         </div>
     )

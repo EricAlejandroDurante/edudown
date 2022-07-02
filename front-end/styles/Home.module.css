@@ -1,6 +1,5 @@
 .container {
   padding: 0 2rem;
-  background-color: #CBE8F2;
 }
 
 .main {
@@ -11,6 +10,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.button{
+  background-color: #BF3A45;
 }
 
 .footer {

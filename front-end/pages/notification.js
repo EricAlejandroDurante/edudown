@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from "../styles/Home.module.css";
-import Notification from "../component/auxiliar";
+import Notification from "../components/auxiliar";
 
 export default function NotificationSide(){
     return (

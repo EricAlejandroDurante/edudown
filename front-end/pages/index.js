@@ -3,7 +3,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
-import Users from "../component/Users";
+import Users from "../components/Users";
+
 
 /*export async function getStaticProps() {
   const { data } = await client.query({

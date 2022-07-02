@@ -51,8 +51,11 @@ export default function CreateNotificationProblem(){
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <input type="text" name="boxNotify" placeholder='Ingrese el box que tiene el problema' onChange={formik.handleChange} value={formik.values.boxNotify} required/>
+                    <br/>
                     <input type="text" name="userNotification" placeholder='Ingrese el rut del usuario' onChange={formik.handleChange} value={formik.values.userNotification} required/>
+                    <br/>
                     <textarea type="text" name="notification" placeholder='notification' onChange={formik.handleChange} value={formik.values.notification} required/>
+                
                 </div>
                 <div>
                     <button type='submit'>Ingresar Notificacion</button>

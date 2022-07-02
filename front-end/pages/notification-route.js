@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import styles from "../styles/Home.module.css";
-import Notification from "../component/Notification/NotificationProblem";
-import NotificationOnly from '../component/Notification/NotificationOnly';
-import NotificationList from "../component/Notification/Notifications"
+import Notification from "../components/Notification/NotificationProblem";
+import NotificationOnly from '../components/Notification/NotificationOnly';
+import NotificationList from "../components/Notification/Notifications"
 
 export default function NotificationSide() {
     return (
