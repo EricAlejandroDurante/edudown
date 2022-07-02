@@ -33,21 +33,3 @@ export default function User () {
       </div>
     )
   }
-/*
-export default function Users(){
-    const { data, loading, error }=useQuery(QUERY);
-    if (loading) {
-        return <h2>Loading</h2>
-    }
-    if (error) {
-        console.error(error);
-        return null;
-    }
-    const getAllUsers = data.getAllUsers;
-
-    return(
-        <div>
-            {getAllUsers}
-        </div>
-    );
-}*/

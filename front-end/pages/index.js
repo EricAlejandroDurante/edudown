@@ -4,32 +4,8 @@ import styles from '../styles/Home.module.css'
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import Users from "../components/Users";
+import Login from '../components/login/login';
 
-
-/*export async function getStaticProps() {
-  const { data } = await client.query({
-    query: gql`
-    query Users{
-      getAllUsers {
-        RUT
-        name
-        email
-        password
-        especialidad
-        Date
-        edad
-      }
-    }
-    `,
-  });
-
-  return {
-    props: {
-      users: data.getAllUsers,
-    },
- };
-}
-*/
 export default function Home({ users }) {
   return (
     <div className={styles.container}>
@@ -40,14 +16,14 @@ export default function Home({ users }) {
       </Head>
 
       <main className={styles.main}>
-      <div className={styles.grid}>
-  <h1>Edudown
-  </h1>
-</div>
+        <div className={styles.grid}>
+          <Login />
+
+        </div>
       </main>
 
       <footer className={styles.footer}>
-        Los pepinos - derechos reservados 
+        Los pepinos - derechos reservados
       </footer>
     </div>
   )

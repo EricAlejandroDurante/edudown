@@ -61,7 +61,6 @@ export default function Create() {
   }
   return (
     <div className='w-full max-w-xl'>
-      <h1>Hola</h1>
       <form className='bg-white w-full max-w-lg shadow-md px-8 pt-6 pb-8 mb-4' onSubmit={formik.handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
