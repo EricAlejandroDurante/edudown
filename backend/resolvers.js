@@ -5,9 +5,14 @@ const Insumo = require('./models/Insumo');
 const Paciente = require('./models/Paciente');
 const Appointment = require('./models/Appointment');
 const NotifyContingencies = require('./models/NotifyContingencies');
+const { ApolloError } = require('apollo-server-express');
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcryptjs")
 
 const resolvers = {
     Query:{
+        // Mutacion para hacer el login
+        user: (_, {ID}) => User.findById(ID),
         //Que es lo que consulo: () => que es lo que retorno
         hello: () => "Hello World",
         getAllTasks: async () => {
@@ -163,6 +168,78 @@ const resolvers = {
             })
             return boxUpdate
         },
+
+        //Mutacion para el registro de usuarios:
+        async registerUser(_, {registerInput: {RUT, name, lastName, email, password, especialidad, date, edad}}){
+            //Vemos si existe el usuario antiguo
+            const oldUser = await User.findOne({email});
+
+            // Si existe, le enviamos el error correspondiente
+
+            if(oldUser){
+                throw new ApolloError('El usuario ya esta registrado '+email, 'USER_ALREADY_EXISTS')
+            }
+
+            //Si no existe, debemos registrarlo y encriptar su contraseña.
+            let encryptedPassword = await bcrypt.hash(password, 10);
+
+            //Ahora debemos enviar los datos a mongo db.
+                //ni idea por que en el tutorial hicieron eso.
+            const newUser = new User({
+                RUT: RUT,
+                name: name,
+                lastName: lastName,
+                email: email.toLowerCase(),
+                password: encryptedPassword,
+                especialidad: especialidad,
+                date: date, 
+                edad:edad    
+            })
+
+            //Ahora creamos el JWT.
+            const token = jwt.sign(
+                { user_id: newUser._id, email},
+                "UNSAFE_STRING",
+                {
+                    expiresIn: "2h"
+                }
+                );
+            newUser.token = token;
+            // Ahora debemos guardar el usuario
+            const res = await newUser.save();
+            return{
+                id: res.id,
+                ...res._doc
+            }
+
+        },
+        async loginUser( _, {loginInput: {email, password}}){
+            //vemos si existe el email
+            const user = await User.findOne({email});
+            //Ahora realizamos un condicional booleano para ver si las contraseñas son iguales
+
+            if(user && (await bcrypt.compare(password, user.password))){
+                //Ahora creamos un nuevo token
+
+                const token = jwt.sign(
+                    {user_id: user._id, email},
+                    "UNSAFE_STRING",
+                    {
+                        expiresIn: "2h"
+                    }
+                );
+                //adjuntamos el token del usuario.
+
+                user.token = token;
+
+                return {
+                    id: user.id,
+                    ...user._doc
+                }
+            }else {
+                throw new ApolloError('Incorrect password', 'INCORRECT_PASSWORD')
+            }
+        }
     }
 };
 

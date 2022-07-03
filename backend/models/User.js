@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+//agregar 2 cosas en el esquema.
 const userSchema = Schema({
     RUT:{
         type: String,
@@ -22,6 +22,8 @@ const userSchema = Schema({
     email:{
         type: String,
         required: true,
+        //necesitamos que los correos sean unicos
+        //unique:true
         min: 6,
         max: 50,
     },
@@ -44,7 +46,9 @@ const userSchema = Schema({
     edad:{
         type: Number,
         required: true
-    }
+    },
+    //debemos pasarle un token al modelo
+    token: { type:String}
 });
 
 module.exports = model('User', userSchema);

@@ -23,7 +23,7 @@ const typeDefs = gql`
         tipo_insumo: String
         cantidad: Int
     }
-
+    #debemos agregar el token que identifique a cada usuario
     type User{
         id:ID
         RUT: String
@@ -34,7 +34,25 @@ const typeDefs = gql`
         especialidad: String
         Date: String
         edad: Int
+        token: String
         #Que datos retornar cuando se consultan
+    }
+    #para crear un login, debemos crear un esquema de registro
+    input RegisterInput{
+        RUT: String
+        name: String
+        lastName: String
+        email: String
+        password: String
+        especialidad: String
+        Date: String
+        edad: Int
+    }
+
+    #Ahora debemos agregarle el input de Login.
+    input LoginInput{
+        email: String
+        password: String
     }
 
     type Box{
@@ -69,6 +87,10 @@ const typeDefs = gql`
         hello:String
         getAllTasks: [Task]
         getAllUsers: [User]
+
+        #creamos un usuario
+        user(id: ID!): User
+
         getAllPacientes: [Paciente]
         getPaciente(id:ID): Paciente
         getInsumosPorEspecialidad(tipo_insumo: String): [Insumo]
@@ -95,6 +117,11 @@ const typeDefs = gql`
         deleteUser(id: ID!): String
         updateUser(id:ID , user: userInput): User!
         createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
+
+        #Estas mutaciones son para probar los registros de usuario
+        registerUser(registerInput: RegisterInput): User
+        loginUser(loginInput: LoginInput): User
+
 
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box
         UpdateBox(id:Int, estado_actual: String): Box
