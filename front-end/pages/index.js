@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import Users from "../components/Users";
-import Login from '../components/login/login';
+import Login from './login/login';
 
 export default function Home({ users }) {
   return (

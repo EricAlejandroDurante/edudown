@@ -13,6 +13,8 @@ const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
+      //aqui obtenemos el token si es que exite, si no se creará uno
+      //authorization: localStorage.setItem("token") || ""
       // authorization: accessToken ? `Bearer ${accessToken}` : ''
     }
   }
@@ -39,7 +41,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-export default client
+export default client;
 
 /*
 import { ApolloClient, InMemoryCache } from "@apollo/client";
