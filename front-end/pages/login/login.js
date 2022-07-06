@@ -1,30 +1,25 @@
-import { gql, useMutation } from '@apollo/client'
-import { useFormik } from 'formik'
-import { useRouter } from 'next/router'
-import * as Yup from 'yup'
+//import { gql, useMutation } from '@apollo/client'
+//import { useFormik } from 'formik'
+//import { useRouter } from 'next/router'
+//import * as Yup from 'yup'
 import styles from '../../styles/Home.module.css'
-//import {AuthContext} from '../../context/authContext'
-import Notification from '../notificationView';
+//import Notification from '../notificationView';
+import { useAuth } from '../lib/auth.js'
+import { useState } from 'react'
 
-/*const FormSchema = Yup.object().shape({
-    email:Yup.string().required('').email(''),
-    password:Yup.string().required('')
-})
 
-const LOGIN_USER= gql`
-    mutation login(
-        $loginInput: LoginInput
-    ){
-        loginUser(
-            loginInput: $$loginInput
-        ){
-            email
-            token
-        }
-    }
-`
-*/
+
 export default function Login(props) {
+
+    const [username, setUsername]= useState('')
+    const [password, setPassword]= useState('')
+
+    const {signIn, signOut} = useAuth()
+    const { isSignedIn } = useAuth()
+    function onSubmit(e){
+        e.preventDefault()
+        signIn({username, password})
+    }
    /* const context = useContext(AuthContext);
     const [errors, setErrors] = useState([]);
 
@@ -62,16 +57,16 @@ export default function Login(props) {
                     <label className='block text-gray-700 text-sm font-bold mb-2'>
                         Correo
                     </label>
-                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' type='text' />
+                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' type='text' onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <div className='mb-6'>
                     <label className='block text-gray-700 text-sm font-bold mb-2'>
                         Contraseña
                     </label>
-                    <input className='shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'placeholder='*************' type='password'/>
+                    <input className='shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'placeholder='*************' type='password' onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
                 <div className='flex items-center justify-between'>
-                    <button className='bg-french-raspberry hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
+                    <button type='submit' className='bg-french-raspberry hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
                         Ingresar
                     </button>
                 </div>

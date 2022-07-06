@@ -23,7 +23,10 @@ const NotificationCreate = gql`
 `
 export default function CreateNotificationProblem() {
     const [notificationCreate, { loading, error }] = useMutation(NotificationCreate, {
-        refetchQueries: ['NotifyContingencies']
+        refetchQueries: ['NotifyContingencies'],
+        onCompleted: (data) => {
+            alert("agregado satisfactoriamente")
+          }
     })
     const formik = useFormik({
         initialValues: {
