@@ -21,7 +21,8 @@ module.exports = {
       'yellow':'#F6AE2D',
       'black-light':'#131200',
       'alabaster': '#F3F0E2',
-      'french-raspberry':'#BF3A45'
+      'french-raspberry':'#BF3A45',
+      'rojo':'#FF0000'
     },
   },
   plugins: [],

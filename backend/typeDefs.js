@@ -97,6 +97,7 @@ const typeDefs = gql`
         getBox(tipo_box: String):[Box]
         getAppointment: [Appointment]
         getAllNotifyContingencies: [NotifyContingencies]
+        getAllAppointments: [Float]
     }
 
     input userInput{

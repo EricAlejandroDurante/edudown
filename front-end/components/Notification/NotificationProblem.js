@@ -59,12 +59,14 @@ export default function CreateNotificationProblem() {
                         </label>
                         <input className='appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type="text" name="boxNotify" placeholder='Ingrese el box que tiene el problema' onChange={formik.handleChange} value={formik.values.boxNotify} required />
                     </div>
+                    
                     <div className='w-full ms:w1/2 px-3 mb-6 md:mb-0'>
                         <label className='className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
                             Rut/Run
                         </label>
                         <input className='appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type="text" name="userNotification" placeholder='Ingrese el rut del usuario' onChange={formik.handleChange} value={formik.values.userNotification} required />
                     </div>
+
                     <div className='w-full ms:w1/2 px-3 mb-6 md:mb-0'>
                         <textarea className='flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent' type="text" name="notification" placeholder='notification' onChange={formik.handleChange} value={formik.values.notification} required />
 

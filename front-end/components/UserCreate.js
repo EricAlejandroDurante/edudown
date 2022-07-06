@@ -82,11 +82,10 @@ export default function Create() {
               Rut/Run
             </label>
             <input className="appearance block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="RUT" placeholder="11111111-1" onChange={formik.handleChange} value={formik.values.RUT} required />
-
           </div>
+
+
           <div className="w-full md:w-1/2 px-3">
-
-
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
               Especialidad
             </label>
@@ -96,6 +95,7 @@ export default function Create() {
               <option>Administrador</option>
             </select>
           </div>
+
           <div className='flex flex-wrap px-3 md:2-1/2'>
           <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Email</label>
           <input className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' type="email" name="email" placeholder="email" onChange={formik.handleChange} value={formik.values.email} required />
