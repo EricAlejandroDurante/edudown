@@ -13,7 +13,7 @@ const schemaregister = Joi.object({
     especialidad: Joi.string().min(8).max(50).required()
 })
 
-router.post('/login', async (req, res) =>{
+router.post('/sign-in', async (req, res) =>{
     const user = User.findOne({RUT:req.body.rut})
 
     //existe el ususario?
@@ -28,9 +28,9 @@ router.post('/login', async (req, res) =>{
     }, process.env.TOKEN_SECRET)
 
 
-    res.header('auth-token',token).json({
-        error: null,
-        mensaje: {token}
+    res.json({
+        accessToken: token,
+        sessionId: "1"
     })
 })
 
