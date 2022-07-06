@@ -50,10 +50,10 @@ const typeDefs = gql`
     }
 
     #Ahora debemos agregarle el input de Login.
-    input LoginInput{
-        email: String
-        password: String
-    }
+    #input LoginInput{
+    #    email: String
+    #    password: String
+    #}
 
     type Box{
         id: ID
@@ -119,8 +119,9 @@ const typeDefs = gql`
         createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
 
         #Estas mutaciones son para probar los registros de usuario
-        registerUser(registerInput: RegisterInput): User
-        loginUser(loginInput: LoginInput): User
+        registerUser(RUT: String, name: String,lastName: String,email: String,password: String,especialidad: String,Date: String
+        edad: Int): User
+        loginUser(email: String, password: String): User
 
 
         createBox(id: Int,tipo_box: String, tamano_box: String, estado_actual: String): Box

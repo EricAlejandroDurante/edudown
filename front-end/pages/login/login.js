@@ -15,7 +15,7 @@ export default function Login(props) {
     const [password, setPassword]= useState('')
 
     const {signIn, signOut} = useAuth()
-    const { isSignedIn } = useAuth()
+    
     function onSubmit(e){
         e.preventDefault()
         signIn({username, password})

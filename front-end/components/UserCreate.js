@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import { useFormik } from 'formik'
+import { useFormik } from 'formik'// QUE ES PARA LOS FORMULARIOS
 import { useRouter } from 'next/router'
 import * as Yup from 'yup'
 const FormSchema = Yup.object().shape({
@@ -13,8 +13,8 @@ const FormSchema = Yup.object().shape({
 })
 
 const CreateUser = gql`
-mutation Mutation($rut: String, $name: String, $lastName: String, $email: String, $password: String, $especialidad: String, $edad: Int) {
-  createUser(RUT: $rut, name: $name,lastName: $lastName, email: $email, password: $password, especialidad: $especialidad, edad: $edad) {
+mutation Mutation($RUT: String, $name: String, $lastName: String, $email: String, $password: String, $especialidad: String, $edad: Int) {
+  createUser(RUT: $RUT, name: $name, lastName: $lastName, email: $email, password: $password, especialidad: $especialidad, edad: $edad) {
     RUT
     name
     lastName
@@ -22,6 +22,7 @@ mutation Mutation($rut: String, $name: String, $lastName: String, $email: String
     password
     especialidad
     edad
+    token
   }
 }
 `
@@ -31,13 +32,14 @@ export default function Create() {
   const [UserCreate, { loading, error }] = useMutation(CreateUser, {
     refetchQueries: ['Users'],
     onCompleted: (data) => {
+      console.log(data)
       alert("agregado satisfactoriamente")
       router.push('/')
     }
   })
   const formik = useFormik({
     initialValues: {
-      rut: '',
+      RUT: '',
       name: '',
       lastName: '',
       email: '',
@@ -79,7 +81,7 @@ export default function Create() {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
               Rut/Run
             </label>
-            <input className="appearance block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="rut" placeholder="11111111-1" onChange={formik.handleChange} value={formik.values.rut} required />
+            <input className="appearance block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="RUT" placeholder="11111111-1" onChange={formik.handleChange} value={formik.values.RUT} required />
 
           </div>
           <div className="w-full md:w-1/2 px-3">

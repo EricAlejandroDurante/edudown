@@ -8,15 +8,15 @@ import Navbar from '../components/Navbar';
 import newUser from './newUser';
 
 
-const SignIn= () => {
-  const [username, setUsername]= useState('')
+const SignIn = () => {
+  const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
 
     const {signIn, signOut} = useAuth()
     
     function onSubmit(e){
         e.preventDefault()
-        signIn({username, password})
+        signIn({email, password})
     }
    /* const context = useContext(AuthContext);
     const [errors, setErrors] = useState([]);
@@ -48,14 +48,11 @@ const SignIn= () => {
     return (
         <div classNameNameName="w-full max-w-xs">
             <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-                <div className='flex flex-col justify-center items-center mb-2'>
-                    <img src='/images/logo_edudown.png' className={styles.icon}/>
-                </div>
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-bold mb-2'>
                         Correo
                     </label>
-                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' type='text' onChange={(e) => setUsername(e.target.value)} />
+                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' type='text' onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className='mb-6'>
                     <label className='block text-gray-700 text-sm font-bold mb-2'>
@@ -78,12 +75,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>GRANDcast.FM</title>
+        <title>Edudown</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1>GRANDcast.FM</h1>
+        <h1>Edudown</h1>
         {!isSignedIn() && <SignIn />}
         {isSignedIn() && <newUser/>}
       </main>

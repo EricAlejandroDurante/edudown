@@ -64,12 +64,53 @@ const resolvers = {
             return newTask
         },
         //Mutaciones de usuario
-        async createUser(_,args){//creamos a un usuario
+        async createUser(_,{RUT, name, lastName, email, password, especialidad, date, edad}){
+            const oldUser = await User.findOne({email});
+
+            // Si existe, le enviamos el error correspondiente
+
+            if(oldUser){
+                throw new ApolloError('El usuario ya esta registrado '+email, 'USER_ALREADY_EXISTS')
+            }
+
+            //Si no existe, debemos registrarlo y encriptar su contraseña.
+            let encryptedPassword = await bcrypt.hash(password, 10);
+
+            //Ahora debemos enviar los datos a mongo db.
+                //ni idea por que en el tutorial hicieron eso.
+            const newUser = new User({
+                RUT: RUT,
+                name: name,
+                lastName: lastName,
+                email: email.toLowerCase(),
+                password: encryptedPassword,
+                especialidad: especialidad,
+                date: date, 
+                edad:edad    
+            })
+
+            //Ahora creamos el JWT.
+            const token = jwt.sign(
+                { user_id: newUser._id, email},
+                "UNSAFE_STRING",
+                {
+                    expiresIn: "2h"
+                }
+                );
+            newUser.token = token;
+            // Ahora debemos guardar el usuario
+            const res = await newUser.save();
+            return{
+                id: res.id,
+                ...res._doc
+            }
+        },
+        /*async createUser(_,args){//creamos a un usuario
             const {RUT, name, lastName, email, password, especialidad,edad} = args
             const newuser = new User({RUT, name, lastName, email, password, especialidad,edad})
             await newuser.save()
             return newuser
-        },
+        },*/
         async deleteUser(_, {id}){//eliminamos al usuario
             await User.findByIdAndDelete(id);
             return 'User delete'
@@ -170,7 +211,7 @@ const resolvers = {
         },
 
         //Mutacion para el registro de usuarios:
-        async registerUser(_, {registerInput: {RUT, name, lastName, email, password, especialidad, date, edad}}){
+        async registerUser(_, {RUT, name, lastName, email, password, especialidad, date, edad}){
             //Vemos si existe el usuario antiguo
             const oldUser = await User.findOne({email});
 
@@ -213,7 +254,7 @@ const resolvers = {
             }
 
         },
-        async loginUser( _, {loginInput: {email, password}}){
+        async loginUser( _, {email, password}){
             //vemos si existe el email
             const user = await User.findOne({email});
             //Ahora realizamos un condicional booleano para ver si las contraseñas son iguales

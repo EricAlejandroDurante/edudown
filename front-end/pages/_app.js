@@ -1,4 +1,19 @@
 import '../styles/globals.css'
+import { AuthProvider } from '../lib/auth.js'
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  )
+}
+
+export default MyApp
+
+
+
+/*import '../styles/globals.css'
 
 import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
@@ -22,4 +37,4 @@ function MyApp({ Component, pageProps }) {
   );
 }*/
 
-export default MyApp 
+//export default MyApp */
