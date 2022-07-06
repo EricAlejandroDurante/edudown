@@ -138,10 +138,10 @@ const resolvers = {
             newUser.token = token;
             // Ahora debemos guardar el usuario
             const res = await newUser.save();
-            return{
-                id: res.id,
-                ...res._doc
-            }
+            return({
+              sessionId: "1",
+              accessToken: token
+            })
         },
         /*async createUser(_,args){//creamos a un usuario
             const {RUT, name, lastName, email, password, especialidad,edad} = args
