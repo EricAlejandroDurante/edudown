@@ -7,7 +7,54 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar';
 import newUser from './newUser';
 
+const SignIn = () => {
+  const [email, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  
+  const { signIn, signOut } = useAuth()
 
+  function onSubmit(e) {
+    e.preventDefault()
+    signIn({ email, password })
+  }
+
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="email"
+          onChange={(e) => setUsername(e.target.value)}
+        ></input>
+        <input
+          type="password"
+          placeholder="password"
+          onChange={(e) => setPassword(e.target.value)}
+        ></input>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+  )
+}
+
+export default function Home() {
+  const { isSignedIn } = useAuth()
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Edudown</title>
+      </Head>
+
+      <main className={styles.main}>
+        <h1>Edudown</h1>
+        {!isSignedIn() && <SignIn />}
+        {isSignedIn() && <h1>Hola</h1>}
+      </main>
+    </div>
+  )
+}
+
+/*
 const SignIn = () => {
   const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
@@ -44,21 +91,21 @@ const SignIn = () => {
     });
 
 */
-
-    return (
-        <div classNameNameName="w-full max-w-xs">
+/*    
+return (
+        <div className="w-full max-w-xs">
             <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-bold mb-2'>
                         Correo
                     </label>
-                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' type='text' onChange={(e) => setEmail(e.target.value)} />
+                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' name='email' type='text' onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className='mb-6'>
                     <label className='block text-gray-700 text-sm font-bold mb-2'>
                         Contraseña
                     </label>
-                    <input className='shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'placeholder='*************' type='password' onChange={(e)=>setPassword(e.target.value)}/>
+                    <input className='shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'placeholder='*************' name='password' type='password' onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
                 <div className='flex items-center justify-between'>
                     <button type='submit' className='bg-french-raspberry hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
