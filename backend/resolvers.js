@@ -11,6 +11,9 @@ const bcrypt = require("bcryptjs")
 
 const resolvers = {
     Query:{
+        // query que se llame viewer, y que a partir del id del jwt decodificado, retorne el usuario que está logueado
+        // viewer te tiene que retornar el tipo user
+        // averiguar cómo obtener el id del usuario desde el middleware
         // Mutacion para hacer el login
         user: (_, {ID}) => User.findById(ID),
         //Que es lo que consulo: () => que es lo que retorno
