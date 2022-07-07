@@ -53,44 +53,6 @@ const resolvers = {
             const box = await Box.findOne({tipo_box : args.tipo_box})
             return box
         },
-        getAllAppointments: async() =>{
-            const total_appointments = await Appointment.find()
-            const percent = 100/total_appointments.length
-            
-            //Kinesiologia
-            const caracupdate = await Appointment.find({especialidadSesion: "Kinesiologia"})
-            let sesiones_terminadas = caracupdate.filter(caracupdate => caracupdate.situacion === "Terminada");
-            let sesiones_suspendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Suspendida");
-            let sesiones_extendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Extendida");
-            let sesiones_disponibles = caracupdate.filter(caracupdate => caracupdate.situacion === "Disponible");
-            let total = caracupdate.length - sesiones_disponibles.length
-
-            //Porcentaje de sesiones terminadas
-            let porc_terminada = sesiones_terminadas.length/total * 100
-            //Porcentaje de sesiones suspendidas
-            let porc_suspendida = sesiones_suspendidas.length/total *100
-            //Porcentaje de sesiones extendidas
-            let porc_extendida = sesiones_extendidas.length/total *100
-
-
-            //Fonoaudiologia
-            const caracupdate_fono = await Appointment.find({especialidadSesion: "Fonoaudiologia"})
-            let sesiones_terminadas_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Terminada");
-            let sesiones_suspendidas_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Suspendida");
-            let sesiones_extendidas_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Extendida");
-            let sesiones_disponibles_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Disponible");
-            
-            let total_fono = caracupdate_fono.length - sesiones_disponibles_fono.length
-
-            //Porcentaje de sesiones terminadas
-            let porc_terminada_fono = sesiones_terminadas_fono.length/total_fono * 100
-            //Porcentaje de sesiones suspendidas
-            let porc_suspendida_fono = sesiones_suspendidas_fono.length/total_fono *100
-            //Porcentaje de sesiones extendidas
-            let porc_extendida_fono = sesiones_extendidas_fono.length/total_fono *100
-
-            return [caracupdate.length*percent, porc_extendida, porc_terminada, porc_suspendida, caracupdate_fono.length*percent,porc_extendida_fono, porc_terminada_fono, porc_suspendida_fono]
-        }
     },
     //guardando en base de datos
     Mutation:{
@@ -138,10 +100,10 @@ const resolvers = {
             newUser.token = token;
             // Ahora debemos guardar el usuario
             const res = await newUser.save();
-            return({
-              sessionId: "1",
-              accessToken: token
-            })
+            return{
+                id: res.id,
+                ...res._doc
+            }
         },
         /*async createUser(_,args){//creamos a un usuario
             const {RUT, name, lastName, email, password, especialidad,edad} = args
@@ -216,6 +178,26 @@ const resolvers = {
             return box_per_day
         },
 
+
+        //FUNCIONALIDAD 13
+        async caracteristicasAppointment(_, args){
+            const caracupdate = await Appointment.find({especialidadSesion: args.especialidadSesion})
+            const caracupdateterminada = await Appointment.find({especialidadSesion: args.especialidadSesion})
+            let sesiones_terminadas = caracupdate.filter(caracupdate => caracupdate.situacion === "Terminada");
+            let sesiones_suspendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Suspendida");
+            let sesiones_extendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Extendida");
+            let sesiones_disponibles = caracupdate.filter(caracupdate => caracupdate.situacion === "Disponible");
+            let total = caracupdateterminada.length - sesiones_disponibles.length
+
+            //Porcentaje de sesiones terminadas
+            let porc_terminada = sesiones_terminadas.length/total * 100
+            //Porcentaje de sesiones suspendidas
+            let porc_suspendida = sesiones_suspendidas.length/total *100
+            //Porcentaje de sesiones extendidas
+            let porc_extendida = sesiones_extendidas.length/total *100
+            
+            return caracupdate
+        },
         async deleteAppointment(_, {id}){
             await Appointment.findByIdAndDelete(id)
             return 'Appointment deleted'
@@ -226,78 +208,6 @@ const resolvers = {
                 $set: args
             })
             return boxUpdate
-        },
-
-        //Mutacion para el registro de usuarios:
-        async registerUser(_, {RUT, name, lastName, email, password, especialidad, date, edad}){
-            //Vemos si existe el usuario antiguo
-            const oldUser = await User.findOne({email});
-
-            // Si existe, le enviamos el error correspondiente
-
-            if(oldUser){
-                throw new ApolloError('El usuario ya esta registrado '+email, 'USER_ALREADY_EXISTS')
-            }
-
-            //Si no existe, debemos registrarlo y encriptar su contraseña.
-            let encryptedPassword = await bcrypt.hash(password, 10);
-
-            //Ahora debemos enviar los datos a mongo db.
-                //ni idea por que en el tutorial hicieron eso.
-            const newUser = new User({
-                RUT: RUT,
-                name: name,
-                lastName: lastName,
-                email: email.toLowerCase(),
-                password: encryptedPassword,
-                especialidad: especialidad,
-                date: date, 
-                edad:edad    
-            })
-
-            //Ahora creamos el JWT.
-            const token = jwt.sign(
-                { user_id: newUser._id, email},
-                "UNSAFE_STRING",
-                {
-                    expiresIn: "2h"
-                }
-                );
-            newUser.token = token;
-            // Ahora debemos guardar el usuario
-            const res = await newUser.save();
-            return{
-                id: res.id,
-                ...res._doc
-            }
-
-        },
-        async loginUser( _, {email, password}){
-            //vemos si existe el email
-            const user = await User.findOne({email});
-            //Ahora realizamos un condicional booleano para ver si las contraseñas son iguales
-
-            if(user && (await bcrypt.compare(password, user.password))){
-                //Ahora creamos un nuevo token
-
-                const token = jwt.sign(
-                    {user_id: user._id, email},
-                    "UNSAFE_STRING",
-                    {
-                        expiresIn: "2h"
-                    }
-                );
-                //adjuntamos el token del usuario.
-
-                user.token = token;
-
-                return {
-                    id: user.id,
-                    ...user._doc
-                }
-            }else {
-                throw new ApolloError('Incorrect password', 'INCORRECT_PASSWORD')
-            }
         }
     }
 };

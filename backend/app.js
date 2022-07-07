@@ -1,6 +1,6 @@
 //framework de node para crear url's en node
 const express = require('express');
-const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
 require('dotenv').config()
 
 /*
@@ -24,7 +24,8 @@ connectDB()
 const authRoutes = require('./routes/auth')
 const validatetoken = require("./routes/middleware");
 
-app.use('/api/user', authRoutes);
+app.use(bodyParser.json())
+app.use('/api/user', authRoutes)
 
 app.get('/',validatetoken, (req,res) => 
     res.send('Welcome to my api')
@@ -43,6 +44,7 @@ async function start (){
     await apolloServer.start()
     apolloServer.applyMiddleware({app})
 
+    
     app.get('*', (req,res) => 
         res.status(404).send("Error 404 o lo que usted quiera, Not Found")
     );

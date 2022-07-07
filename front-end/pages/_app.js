@@ -1,54 +1,16 @@
-import '../styles/globals.css'
-import { AuthProvider } from '../lib/auth.js'
+import { SessionProvider } from 'next-auth/react'
+import { ApolloProvider } from '@apollo/client'
+import client from 'apollo-client'
+import 'styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
+function MyApp ({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <SessionProvider session={session}>
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </SessionProvider>
   )
 }
 
 export default MyApp
-
-
-/*import '../styles/globals.css'
-import { AuthProvider } from '../lib/auth.js'
-
-function MyApp({ Component, pageProps }) {
-  return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
-  )
-}
-
-export default MyApp
-
-
-
-/*import '../styles/globals.css'
-
-import { ApolloProvider } from "@apollo/client";
-import client from "../apollo-client";
-import Navbar from '../components/Navbar';
-import { AuthProvider } from '../lib/auth.js'
-
-function MyApp({ Component, pageProps }) {
-  return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
-  )
-}
-/*
-function MyApp({ Component, pageProps }) {
-  return (
-    <ApolloProvider client={client}>
-      <Navbar/>
-      <Component {...pageProps} />
-    </ApolloProvider>
-  );
-}*/
-
-//export default MyApp */

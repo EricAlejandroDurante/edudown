@@ -1,21 +1,18 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
-// import { getSession, signOut } from 'next-auth/react'
+import { getSession, signOut } from 'next-auth/react'
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:3001/graphql'
 })
-//no tenemos el token en next auth, tenemos en el local storage
 
 const authLink = setContext(async (_, { headers }) => {
-  // const { accessToken } = await getSession()
+  const { accessToken } = await getSession()
   return {
     headers: {
       ...headers,
-      //aqui obtenemos el token si es que exite, si no se creará uno
-      //authorization: localStorage.setItem("token") || ""
-      // authorization: accessToken ? `Bearer ${accessToken}` : ''
+      authorization: accessToken ? `Bearer ${accessToken}` : ''
     }
   }
 })
@@ -31,24 +28,14 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     console.log(`[Network error]: ${networkError}`)
     if (networkError.statusCode === 401) {
-      // signOut({ redirect: false })
+      signOut({ redirect: false })
     }
   }
 })
 
 const client = new ApolloClient({
-  link: from([authLink, errorLink, httpLink]),
+  link: from([authLink, errorLink, httpLink]),//cleinte que tu ocupas para conectarte a graphql
   cache: new InMemoryCache()
 })
 
-export default client;
-
-/*
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-
-const client = new ApolloClient({
-    uri: "http://localhost:3001/graphql",
-    cache: new InMemoryCache(),
-});
-
-export default client;*/
+export default client

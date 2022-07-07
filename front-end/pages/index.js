@@ -1,175 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import { gql , client} from "@apollo/client";
-import { useAuth } from '../lib/auth.js'
+import { useSession, signOut } from 'next-auth/react'
 import { useState } from 'react'
-import Navbar from '../components/Navbar';
-import newUser from './newUser';
-
-const SignIn = () => {
-  const [email, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  
-  const { signIn, signOut } = useAuth()
-
-  function onSubmit(e) {
-    e.preventDefault()
-    signIn({ email, password })
-  }
-
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="email"
-          onChange={(e) => setUsername(e.target.value)}
-        ></input>
-        <input
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <button type="submit">Sign In</button>
-      </form>
-    </div>
-  )
-}
+import MainLayout from 'layouts/main'
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  const { isSignedIn } = useAuth()
+  const router = useRouter()
+  const { data: session } = useSession()
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Edudown</title>
-      </Head>
-
-      <main className={styles.main}>
-        <h1>Edudown</h1>
-        {!isSignedIn() && <SignIn />}
-        {isSignedIn() && <h1>Hola</h1>}
-      </main>
-    </div>
+    <MainLayout>
+      <div className='flex flex-col justify-center items-center'>
+        {session && <p>Logueado</p>}
+        {!session && <p>No logueado</p>}
+        {session && <button onClick={() => {
+          signOut({ redirect: false })
+          router.push('/sign-in')
+        }}>Cerrar sesión</button>}
+      </div>
+    </MainLayout>
   )
 }
-
-/*
-const SignIn = () => {
-  const [email, setEmail]= useState('')
-    const [password, setPassword]= useState('')
-
-    const {signIn, signOut} = useAuth()
-    
-    function onSubmit(e){
-        e.preventDefault()
-        signIn({email, password})
-    }
-   /* const context = useContext(AuthContext);
-    const [errors, setErrors] = useState([]);
-
-    function loginUserCallback(){
-        loginUser()
-    }
-
-    const formik = useFormik({
-        initialValues:{
-            email:'',
-            password:''
-        }
-    });
-
-    const [loginUser, {loading}]=useMutation(LOGIN_USER,{
-        update(proxy,{data: {loginUser:userData}}){
-            context.login(userData);
-            return <Notification/>
-        },
-        onError({graphQLErrors}){
-            setErrors(graphQLErrors);
-        },
-        variables: {loginInput: values}
-    });
-
-*/
-/*    
-return (
-        <div className="w-full max-w-xs">
-            <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-                <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2'>
-                        Correo
-                    </label>
-                    <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder='ejemplo@mail.com' name='email' type='text' onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className='mb-6'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2'>
-                        Contraseña
-                    </label>
-                    <input className='shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'placeholder='*************' name='password' type='password' onChange={(e)=>setPassword(e.target.value)}/>
-                </div>
-                <div className='flex items-center justify-between'>
-                    <button type='submit' className='bg-french-raspberry hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
-                        Ingresar
-                    </button>
-                </div>
-
-            </form>
-        </div>
-    )
-}
-export default function Home() {
-  const { isSignedIn } = useAuth()
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Edudown</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1>Edudown</h1>
-        {!isSignedIn() && <SignIn />}
-        {isSignedIn() && <newUser/>}
-      </main>
-    </div>
-  )
-}
-
-//import Users from "../components/Users";
-//import Login from './login/login';
-
-
-
-/*import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import { gql } from "@apollo/client";
-import client from "../apollo-client";
-import Users from "../components/Users";
-import Login from './login/login';
-
-export default function Home({ users }) {
-  const { isSignedIn } = useAuth()
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <meta name="description" content="Generated by create next app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <div className={styles.grid}>
-          <Login />
-
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        Los pepinos - derechos reservados
-      </footer>
-    </div>
-  )
-}
-*/
-

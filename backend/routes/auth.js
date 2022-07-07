@@ -1,9 +1,11 @@
-const router = require('express').Router();
+const app = require('express')
+const router = app.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const Joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
 
+const secret = 'RTq+fNFrGRRwudfer2D0QuTRh+itYG69JpQj9S7/fiE='
 
 const schemaregister = Joi.object({
     RUT: Joi.string().min(3).max(20).required(),
@@ -13,29 +15,31 @@ const schemaregister = Joi.object({
     especialidad: Joi.string().min(8).max(50).required()
 })
 
-router.post('/sign-in', async (req, res) =>{
-    const user = User.findOne({RUT:req.body.rut})
+router.post('/sign-in', async (req, res) => {
+    const user = await User.findOne({email: req.body.email})
 
-    //existe el ususario?
-    if(!user) return res.status(400).json({error: true, mensaje: "RUT INVALIDO"});
+    //existe el usuario?
+    if(!user) return res.status(401).json({error: true, mensaje: "Invalid credentials"});
 
     //Contraseña valida?
     const passvalida = await bcrypt.compare(req.body.password, user.password)
     if(!passvalida) return res.status(400).json({error: true, mensaje: 'RUT INVALIDO'});
 
     const token = jwt.sign({
-        name: user.name
-    }, process.env.TOKEN_SECRET)
+        id: user.id
+    }, process.env.TOKEN_SECRET || secret)
 
+    // jti = obtener jti de token
+    // tabla sessions: id, userId,  jti
+    // session = Session.create(userId: user.id, jti: jti)
 
     res.json({
         accessToken: token,
-        sessionId: "1"
+        sessionId: "1" // session.id
     })
 })
 
-
-router.post('/register', async (req,res) =>{
+router.post('/sign-up', async (req,res) =>{
     const {error} = schemaregister.validate(req.body)
     
     if(error){
@@ -43,7 +47,7 @@ router.post('/register', async (req,res) =>{
     }
 
     const existeElEmail = await User.findOne({email: req.body.email})
-    if(existeElEmail) return res.status(400).json({error: true, mensaje: "Email ya registrado"})
+    if(existeElEmail) return res.status(422).json({error: true, mensaje: "Email ya registrado"})
 
     const saltos = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, saltos)
@@ -67,5 +71,12 @@ router.post('/register', async (req,res) =>{
         res.status(400).json(error)
     }  
 });
+
+// ruta para desloguear
+// delete /sessions/id
+// también puede ser post /sign-out?sessionId=id
+// Session.destroy
+// responder con 204 no content
+
 
 module.exports = router;
