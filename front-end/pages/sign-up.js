@@ -1,4 +1,4 @@
-import { useState } from 'react'
+/*import { useState } from 'react'
 import Link from 'next/link'
 import { publicInstance } from 'axios-instance'
 import { signIn } from 'next-auth/react'
@@ -77,3 +77,4 @@ export default function SignUp () {
     </MainLayout>
   )
 }
+*/

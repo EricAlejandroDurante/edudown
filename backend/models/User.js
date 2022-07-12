@@ -39,10 +39,10 @@ const userSchema = Schema({
         min: 8,
         max: 50,
     },
-    date:{
+    /*date:{
         type: Date,
         default: Date.now
-    },
+    },*/
     edad:{
         type: Number,
         required: true

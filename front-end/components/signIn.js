@@ -16,7 +16,6 @@ export default function SignIn() {
     }
     return (
         <div className="w-full max-w-xs">
-
             <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={onSubmit}>
                 <div className='flex flex-col justify-center items-center mb-2'>
                     <img src='/images/logo_edudown.png' className={styles.icon} />

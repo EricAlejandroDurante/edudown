@@ -32,7 +32,6 @@ const typeDefs = gql`
         email: String
         password: String
         especialidad: String
-        Date: String
         edad: Int
         token: String
         #Que datos retornar cuando se consultan
@@ -120,7 +119,7 @@ const typeDefs = gql`
         createPaciente(name: String, lastName: String, sesion: Int, etapa: Int): Paciente
 
         #Estas mutaciones son para probar los registros de usuario
-        registerUser(RUT: String, name: String,lastName: String,email: String,password: String,especialidad: String,Date: String
+        registerUser(RUT: String, name: String,lastName: String,email: String,password: String,especialidad: String,Date: String,
         edad: Int): User
         loginUser(email: String, password: String): User
 

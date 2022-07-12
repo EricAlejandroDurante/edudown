@@ -67,8 +67,9 @@ const resolvers = {
             return newTask
         },
         //Mutaciones de usuario
-        async createUser(_,{RUT, name, lastName, email, password, especialidad, date, edad}){
+        async createUser(_,{RUT, name, lastName, email, password, especialidad, edad}){
             const oldUser = await User.findOne({email});
+            //console.log("Log: ",email);
 
             // Si existe, le enviamos el error correspondiente
 
@@ -88,7 +89,6 @@ const resolvers = {
                 email: email.toLowerCase(),
                 password: encryptedPassword,
                 especialidad: especialidad,
-                date: date, 
                 edad:edad    
             })
 
