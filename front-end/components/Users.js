@@ -1,9 +1,11 @@
 import { useQuery, gql } from "@apollo/client";
+import { useSession } from "next-auth/react";
 import UserCreate from './UserCreate';
 
 const QUERY = gql`
 query Users{
     getAllUsers {
+      id
       RUT
       name
       lastName
@@ -26,7 +28,7 @@ export default function Users () {
     return (
       <div >
       <div className="flex flex-wrap -mb-4 content-center m-10">
-        {
+        { 
           getAllUsers.map((user)=>(
             <div className="container max-w-sm rounded shadow-lg m-3" key={user.id}>
               <div className="px-6 py-4">

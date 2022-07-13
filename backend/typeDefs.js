@@ -88,7 +88,7 @@ const typeDefs = gql`
         getAllUsers: [User]
 
         #creamos un usuario
-        user(id: ID!): User
+        user(id: ID): User
 
         getAllPacientes: [Paciente]
         getPaciente(id:ID): Paciente

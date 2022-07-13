@@ -3,7 +3,8 @@ import { useState } from 'react'
 import MainLayout from 'layouts/main'
 import { useRouter } from 'next/router'
 import Login from 'components/login'
-import Administrador from 'layouts/administrador/index'
+//import Administrador from 'layouts/administrador/index'
+import Administrador from './administrador' 
 
 
 export default function Home() {

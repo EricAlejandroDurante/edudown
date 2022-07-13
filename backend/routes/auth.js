@@ -16,6 +16,7 @@ const schemaregister = Joi.object({
 })
 
 router.post('/sign-in', async (req, res) => {
+    console.log
     const user = await User.findOne({email: req.body.email})
 
     //existe el usuario?
@@ -28,14 +29,13 @@ router.post('/sign-in', async (req, res) => {
     const token = jwt.sign({
         id: user.id
     }, process.env.TOKEN_SECRET || secret)
-
     // jti = obtener jti de token
     // tabla sessions: id, userId,  jti
     // session = Session.create(userId: user.id, jti: jti)
-
+    console.log(user.id)
     res.json({
         accessToken: token,
-        sessionId: "1" // session.id
+        sessionId: user.id // session.id
     })
 })
 

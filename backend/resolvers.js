@@ -15,7 +15,10 @@ const resolvers = {
         // viewer te tiene que retornar el tipo user
         // averiguar cómo obtener el id del usuario desde el middleware
         // Mutacion para hacer el login
-        user: (_, {ID}) => User.findById(ID),
+        user: async (_, args) => {
+            const usuario = await User.findById(args.id)
+            return usuario
+        },
         //Que es lo que consulo: () => que es lo que retorno
         hello: () => "Hello World",
         getAllTasks: async () => {
@@ -27,6 +30,7 @@ const resolvers = {
             const users = await User.find()
             return users
         },
+        //buscamos un usuario por su id
         //buscamos un paciente por su id
         getPaciente: async(_, args) => {
             const paciente = await Paciente.findById(args.id)

@@ -1,17 +1,26 @@
 import Head from "next/head";
-import UserCreate from "components/UserCreate"
+import AdminNewUser from "./adminCreateUser";
 import Notification from "components/Notification/NotificationProblem"
 import Users from "components/Users"
+import { useRouter } from 'next/router'
+import CreateUser from "./adminCreateUser";
+import { useState } from "react";
 export default function AdminUsers() {
+     /*const [userCreat, setUserCreat]= useState(false)
+     const handleClick = ({options})=>{
+        setUserCreat(!userCreat)
+     }*/
+     const router= useRouter()
+    
     return (
-        <div className="grid grid-cols-3">
-            
-        <div className="col-span-1 bg-yellow">
-            <button className="bg-french-raspberry hover:bg-yellow text-white font-bold py-2 px-4 rounded-full m-10">
-                Crear Usuario
+    <div className="grid grid-cols-3">
+        <div className="col-span-1">
+            <button  onClick={() => {router.push('/newuser')}} className="bg-french-raspberry hover:bg-yellow text-white font-bold py-2 px-4 rounded-full m-10">
+            <p>Crear Usuario</p>
             </button>
-            <p>Probando</p>
         </div>
+
+        
         <div className="col-span-2  h-full">
             <Users/>
         </div>
