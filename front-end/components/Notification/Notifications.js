@@ -4,6 +4,7 @@ import NotificationProblem from "./NotificationProblem";
 const Notify = gql`
     query GetAllNotifyContingencies {
      getAllNotifyContingencies {
+        id
         boxNotify
         dateNotify
         userNotification
@@ -17,7 +18,7 @@ export default function AllNotification(){
     console.log(data)
     
     if(loading){
-        return 'Cargando...'
+        return <h2>Cargando...</h2>
     }
     if(error) {
         return JSON.stringify(error)
@@ -26,8 +27,18 @@ export default function AllNotification(){
 
     return(
         <div>
-            {!getAllNotifyContingencies && (<div><NotificationProblem/></div>)}
-            {getAllNotifyContingencies && (<div>{getAllNotifyContingencies.dateNotify}</div>)}
-        </div>
+        <div className="flex flex-wrap -mb-4 content-center m-10">
+            {
+                getAllNotifyContingencies.map((notification)=>(
+                    <div className="container max-w-sm rounded shadow-lg m-3" key={notification.id}>
+                        <div className="px-6 py-4">
+                            <div className="font-bold text-xl mb-2">{notification.id}</div>
+                            <div className="font-bold text-xl mb-2">{notification.notification}</div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>    
+         </div>
     )
 }

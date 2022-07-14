@@ -3,6 +3,7 @@ import { useFormik } from 'formik'// QUE ES PARA LOS FORMULARIOS
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import * as Yup from 'yup'
+import Navbar from './navbar'
 const FormSchema = Yup.object().shape({
   name: Yup.string().required(''),
   lastName: Yup.string().required(''),
@@ -57,7 +58,7 @@ export default function Create() {
     }
   })
   if (loading) {
-    return <h1>Cargando...</h1>
+    return <div><Navbar/></div>
   }
   if (error) {
     //setCreateError(true)

@@ -1,5 +1,6 @@
 import { gql, useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/router'
 import * as Yup from 'yup'
 const hours = new Date()
 const NotificationSchema = Yup.object().shape({
@@ -22,25 +23,25 @@ const NotificationCreate = gql`
 }
 `
 export default function CreateNotificationProblem() {
+    const router = useRouter()
     const [notificationCreate, { loading, error }] = useMutation(NotificationCreate, {
         refetchQueries: ['NotifyContingencies'],
         onCompleted: (data) => {
-            alert("agregado satisfactoriamente")
+            router.push('/modal')
           }
     })
     const formik = useFormik({
         initialValues: {
-            boxNotify: undefined,
+            boxNotify: '',
             dateNotify: hours.toLocaleDateString(),
             timeNotification: hours.getHours().toString() + ":" + hours.getMinutes().toString() + ":" + hours.getSeconds().toString(),
-            userNotification: undefined,
-            notification: undefined
+            userNotification: '',
+            notification: ''
         },
         validationSchema: NotificationSchema,
         onSubmit: async (values) => {
             console.log(values)
             await notificationCreate({ variables: values })
-            alert("Se agrego satisfactoriamente")
         }
     })
     if (loading) {

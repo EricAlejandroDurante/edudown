@@ -27,6 +27,7 @@ export default function Navbar() {
     const { data: session } = useSession()
     const [showOptions, setShowOptions] = useState(false)
     const [showOptions2, setShowOptions2] = useState(false)
+    const [showOptions3, setShowOptions3] = useState(false)
 
     const handleClick = ({ options }) => {
         setShowOptions(!showOptions)
@@ -34,12 +35,16 @@ export default function Navbar() {
     const handleClick2 = ({ options }) => {
         setShowOptions2(!showOptions2)
     }
+
+    const handleClick3 = ({ options }) => {
+        setShowOptions3(!showOptions3)
+    }
     return (
         <nav className="flex filter drop-shadow-md bg-french-raspberry px-4 py-4 h-20 items-center mb-4">
             <MobileNav open={open} setOpen={setOpen} />
             <div className="w-3/12 lg:flex-grow items-center text-white text-sm">
-                <button onClick={()=>router.push("/")}>
-                    <img src='/images/probando.png' className='mx-5'/>
+                <button onClick={() => router.push("/")}>
+                    <img src='/images/probando.png' className='mx-5' />
                 </button>
             </div>
             {session &&
@@ -52,7 +57,7 @@ export default function Navbar() {
                         </div>
                         {showOptions2 && (<div className='absolute right-0 mt-2 w-56 origin-top-right rounder-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none' role="menu" aria-orientation='vertical' aria-labelledby='menu-button' tabIndex="-1">
                             <div className='py-1' role="none">
-                            <div>
+                                <div>
                                     {session && <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-yellow" onClick={() => {
                                         router.push('/SaveAppointment')
                                     }}> Agendar
@@ -74,12 +79,22 @@ export default function Navbar() {
                         </div>)}
                     </div>
                 </div>}
-            {session && 
-            <div className='text-sm lg:flex-grow text-white'>
-                <button className='block mt-4 lg:inline-block lg:mt-0 font-semibold text-teal-200 hover:text-yellow mr-4' onClick={()=>router.push('/getInsumo')}>
-                    Insumos
-                </button>
+            {session &&
+                <div className='text-sm lg:flex-grow text-white'>
+                    <button className='block mt-4 lg:inline-block lg:mt-0 font-semibold text-teal-200 hover:text-yellow mr-4' onClick={() => router.push('/getInsumo')}>
+                        Insumos
+                    </button>
                 </div>}
+            {session &&
+            <div className='text-sm lg:flex-grow text-white'>
+            <button onClick={()=>{
+                router.push('/modal')
+            }} className='block mt-4 lg:inline-block lg:mt-0 font-semibold text-teal-200 hover:text-yellow mr-4' >
+                Notificaciones
+            </button>
+        </div>
+                }
+
 
             <div className="w-9/12 flex justify-end items-center">
 
@@ -102,7 +117,7 @@ export default function Navbar() {
                                         Probando
                                     </li>
                                     <li href="/" className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role="menuitem" tabIndex="-1" id="menu-item-0">
-                                        Probando
+                                        Notification
                                     </li>
                                     <li href="/" className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role="menuitem" tabIndex="-1" id="menu-item-0">
                                     </li>
