@@ -118,16 +118,7 @@ export default function Navbar() {
                         </div>
                         {showOptions && (<div className='absolute right-0 mt-2 w-56 origin-top-right rounder-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none' role="menu" aria-orientation='vertical' aria-labelledby='menu-button' tabIndex="-1">
                             <div className='py-1' role="none">
-                                <ul>
-                                    <li href="/" className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role="menuitem" tabIndex="-1" id="menu-item-0">
-                                        Probando
-                                    </li>
-                                    <li href="/" className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role="menuitem" tabIndex="-1" id="menu-item-0">
-                                        Notification
-                                    </li>
-                                    <li href="/" className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role="menuitem" tabIndex="-1" id="menu-item-0">
-                                    </li>
-                                </ul>
+                                
                                 <div className="py-1">
                                     {session && <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-yellow" onClick={() => {
                                         signOut({ redirect: false })
