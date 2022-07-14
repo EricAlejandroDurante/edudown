@@ -51,8 +51,10 @@ const resolvers = {
             const allNotifyContingencies = await NotifyContingencies.find()
             return allNotifyContingencies
         },
-        getInsumosPorEspecialidad: async (_, args) => {
-            const users = await Insumo.find({tipo_insumo: args.tipo_insumo})
+        getInsumosPorEspecialidad: async () => {
+            //async (_, args)
+            //const users = await Insumo.find({tipo_insumo: args.tipo_insumo})
+            const users = await Insumo.find()
             return users
         },
         getBox: async(_, args) => {
@@ -60,6 +62,51 @@ const resolvers = {
             const box = await Box.findOne({tipo_box : args.tipo_box})
             return box
         },
+
+        getAppointmentDate: async() => {
+            let date = new Date();
+            let output = String(date.getDate()).padStart(2, '0') + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-22';
+            const sessions_today = await Appointment.find({selectedDate: output});
+            return sessions_today
+
+        },
+
+        getAllAppointments: async() =>{
+            const caracupdate = await Appointment.find({especialidadSesion: "Kinesiologia"})
+            
+            let sesiones_terminadas = caracupdate.filter(caracupdate => caracupdate.situacion === "Terminada");
+            let sesiones_suspendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Suspendida");
+            let sesiones_extendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Extendida");
+            let sesiones_disponibles = caracupdate.filter(caracupdate => caracupdate.situacion === "Disponible");
+            let total = caracupdate.length - sesiones_disponibles.length
+
+            //Porcentaje de sesiones terminadas
+            let porc_terminada = sesiones_terminadas.length/total * 100
+            //Porcentaje de sesiones suspendidas
+            let porc_suspendida = sesiones_suspendidas.length/total *100
+            //Porcentaje de sesiones extendidas
+            let porc_extendida = sesiones_extendidas.length/total *100
+            
+
+            const caracupdate_fono = await Appointment.find({especialidadSesion: "Fonoaudiologia"})
+            let sesiones_terminadas_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Terminada");
+            let sesiones_suspendidas_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Suspendida");
+            let sesiones_extendidas_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Extendida");
+            let sesiones_disponibles_fono = caracupdate_fono.filter(caracupdate_fono => caracupdate_fono.situacion === "Disponible");
+            let total_fono = caracupdate_fono.length - sesiones_disponibles_fono.length
+
+            //Porcentaje de sesiones terminadas
+            let porc_terminada_fono = sesiones_terminadas_fono.length/total_fono * 100
+            //Porcentaje de sesiones suspendidas
+            let porc_suspendida_fono = sesiones_suspendidas_fono.length/total_fono *100
+            //Porcentaje de sesiones extendidas
+            let porc_extendida_fono = sesiones_extendidas_fono.length/total_fono *100
+
+
+
+
+            return [caracupdate.length, porc_extendida, porc_terminada, porc_suspendida, caracupdate_fono.length,porc_extendida_fono, porc_terminada_fono, porc_suspendida_fono]
+        }
     },
     //guardando en base de datos
     Mutation:{
@@ -112,12 +159,6 @@ const resolvers = {
                 ...res._doc
             }
         },
-        /*async createUser(_,args){//creamos a un usuario
-            const {RUT, name, lastName, email, password, especialidad,edad} = args
-            const newuser = new User({RUT, name, lastName, email, password, especialidad,edad})
-            await newuser.save()
-            return newuser
-        },*/
         async deleteUser(_, {id}){//eliminamos al usuario
             await User.findByIdAndDelete(id);
             return 'User delete'
@@ -185,26 +226,6 @@ const resolvers = {
             return box_per_day
         },
 
-
-        //FUNCIONALIDAD 13
-        async caracteristicasAppointment(_, args){
-            const caracupdate = await Appointment.find({especialidadSesion: args.especialidadSesion})
-            const caracupdateterminada = await Appointment.find({especialidadSesion: args.especialidadSesion})
-            let sesiones_terminadas = caracupdate.filter(caracupdate => caracupdate.situacion === "Terminada");
-            let sesiones_suspendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Suspendida");
-            let sesiones_extendidas = caracupdate.filter(caracupdate => caracupdate.situacion === "Extendida");
-            let sesiones_disponibles = caracupdate.filter(caracupdate => caracupdate.situacion === "Disponible");
-            let total = caracupdateterminada.length - sesiones_disponibles.length
-
-            //Porcentaje de sesiones terminadas
-            let porc_terminada = sesiones_terminadas.length/total * 100
-            //Porcentaje de sesiones suspendidas
-            let porc_suspendida = sesiones_suspendidas.length/total *100
-            //Porcentaje de sesiones extendidas
-            let porc_extendida = sesiones_extendidas.length/total *100
-            
-            return caracupdate
-        },
         async deleteAppointment(_, {id}){
             await Appointment.findByIdAndDelete(id)
             return 'Appointment deleted'

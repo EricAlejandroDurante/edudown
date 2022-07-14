@@ -92,11 +92,12 @@ const typeDefs = gql`
 
         getAllPacientes: [Paciente]
         getPaciente(id:ID): Paciente
-        getInsumosPorEspecialidad(tipo_insumo: String): [Insumo]
+        getInsumosPorEspecialidad: [Insumo] #(tipo_insumo: String)
         getBox(tipo_box: String):[Box]
         getAppointment: [Appointment]
         getAllNotifyContingencies: [NotifyContingencies]
         getAllAppointments: [Float]
+        getAppointmentDate: [Appointment]
     }
 
     input userInput{

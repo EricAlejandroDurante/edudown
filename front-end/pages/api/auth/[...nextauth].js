@@ -19,10 +19,8 @@ export default function auth (req, res) {
                 password: credentials.password
               }
             )
-            console.log("Autorizar", response)
             return response.data
           } catch(e) {
-            console.log("Error", e)
             return null
           }
         }

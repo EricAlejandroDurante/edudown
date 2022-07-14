@@ -1,4 +1,4 @@
-/*import { useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { publicInstance } from 'axios-instance'
 import { signIn } from 'next-auth/react'
@@ -24,7 +24,7 @@ export default function SignUp () {
     },
     validationSchema: FormSchema,
     onSubmit: async (values) => {
-      publicInstance.post('sign_up', values)
+      publicInstance.post('api/user/sign-up', values)
         .then(async (response) => {
           const login = await signIn('credentials', {
             email: values.email,
@@ -77,4 +77,3 @@ export default function SignUp () {
     </MainLayout>
   )
 }
-*/
