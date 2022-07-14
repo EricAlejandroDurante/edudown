@@ -26,13 +26,12 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-        <div className={styles.grid}>
+        <div className="flex flex-wrap -mb-4 content-center m-10">
             {notifications.map((notification) => (
-            <div key={notifications.id} className={styles.card}>
-                <h3>{notification.id}</h3>
-                <h3>{notification.insumo}</h3>
-                <h3>{notification.tipo_insumo}</h3>
-                <h3>{notification.cantidad}</h3>
+            <div key={notifications.id} className="container max-w-sm rounded shadow-lg m-3 p-3">
+                <div className="font-bold text-x1 mb-2">Insumo:         {notification.insumo}</div>
+                <h3>Tipo de insumo: {notification.tipo_insumo}</h3>
+                <h3>Cantidad:       {notification.cantidad}</h3>
             </div>
             ))}
         </div>

@@ -85,6 +85,12 @@ export default function Navbar() {
                         Insumos
                     </button>
                 </div>}
+                {session &&
+                <div className='text-sm lg:flex-grow text-white'>
+                    <button className='block mt-4 lg:inline-block lg:mt-0 font-semibold text-teal-200 hover:text-yellow mr-4' onClick={() => router.push('/usuarios')}>
+                        Usuarios
+                    </button>
+                </div>}
             {session &&
             <div className='text-sm lg:flex-grow text-white'>
             <button onClick={()=>{

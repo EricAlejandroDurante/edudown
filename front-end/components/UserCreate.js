@@ -37,7 +37,7 @@ export default function Create() {
     onCompleted: (data) => {
       console.log(data)
       alert("agregado satisfactoriamente")
-      router.push('/')
+      router.push('/usuarios')
     }
   })
   const formik = useFormik({
