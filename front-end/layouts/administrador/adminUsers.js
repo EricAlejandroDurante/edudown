@@ -5,6 +5,7 @@ import Users from "components/Users"
 import { useRouter } from 'next/router'
 import CreateUser from "./adminCreateUser";
 import { useState } from "react";
+import Carrousel from "components/Carrousel";
 export default function AdminUsers() {
      /*const [userCreat, setUserCreat]= useState(false)
      const handleClick = ({options})=>{
@@ -15,7 +16,7 @@ export default function AdminUsers() {
     return (
     <div className="grid grid-cols-3">
         <div className="col-span-1">
-            <button  onClick={() => {router.push('/newuser')}} className="bg-french-raspberry hover:bg-yellow text-white font-bold py-2 px-4 rounded-full m-10">
+            <button className="bg-french-raspberry hover:bg-yellow text-white font-bold py-2 px-4 rounded-full m-10" onClick={() => {router.push('/newuser')}} >
             <p>Crear Usuario</p>
             </button>
         </div>

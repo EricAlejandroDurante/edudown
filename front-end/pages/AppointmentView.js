@@ -2,6 +2,7 @@ import styles from '../styles/Home.module.css'
 import { useQuery, gql } from "@apollo/client";
 import Head from 'next/head'
 import { useFormik } from 'formik'
+import Navbar from "components/navbar"
 
 const query = gql`
   query getAllAppointments {
@@ -19,11 +20,9 @@ export default function Home() {
   }
   const notifications = data.getAllAppointments
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Edudown</title>
-      </Head>
-      <main>
+    <div>
+      
+        <Navbar/>
         <div className='flex flex-col justify-center items-center'>
 
           <h1>Historico Agendamiento</h1>
@@ -87,7 +86,6 @@ export default function Home() {
             </form>
           </div>
         </div>
-      </main>
     </div>
   )
 }
